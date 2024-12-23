@@ -1,0 +1,107 @@
+/* Style global */
+body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+    background-color: #f3f3f3;
+    /* Fond léger */
+}
+
+/* Conteneurs */
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.containerLarge {
+    max-width: 900px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+    margin: 25px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Titres et paragraphes */
+h1,
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.stat {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+/* Barre de progression */
+.progress-bar-container {
+    width: 90%;
+    height: 30px;
+    background-color: #ddd;
+    border-radius: 15px;
+    margin: 20px auto;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Barre de progression (bleue) */
+#progress-bar {
+    height: 100%;
+    background-color: rgba(24, 127, 211, 0.633); /* Bleu légèrement transparent */
+    border-radius: 15px 0 0 15px;
+    transition: width 0.5s ease-in-out;
+    position: relative; /* Permet de positionner des enfants absolument */
+    overflow: hidden; /* S'assure que le texte ne dépasse pas */
+    z-index: 2;
+}
+
+#progress-bar span {
+    position: absolute; /* Positionnement indépendant de la largeur */
+    right: 5px; /* Distance du bord droit */
+    top: 50%; /* Centrage vertical */
+    transform: translateY(-50%); /* Ajustement pour un vrai centrage */
+    color: #fff; /* Couleur blanche pour contraster */
+    font-weight: bold; /* Texte en gras */
+    font-size: 0.9em; /* Taille légèrement réduite */
+    pointer-events: none; /* Empêche les interactions avec le texte */
+}
+
+/* Zone grisée */
+.grey-overlay {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.626); /* Gris semi-transparent */
+    pointer-events: none;
+    z-index: 1; /* Derrière la barre de progression */
+}
+
+.black-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(56, 56, 56, 0.551);
+    z-index: 0; /* Assure-toi que les traits noirs soient visibles par-dessus la barre */
+}
+
+#course-progress {
+    margin-top: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
