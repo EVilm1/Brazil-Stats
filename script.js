@@ -52,9 +52,9 @@ progressBar.appendChild(percentageText);
 // Gestion des périodes grises
 const greyPeriods = [
     { start: new Date("2024-10-26"), end: new Date("2024-11-03") },
-    { start: new Date("2024-12-20"), end: new Date("2025-02-03") },
+    { start: new Date("2024-12-20"), end: new Date("2025-02-02") },
     { start: new Date("2025-02-28"), end: new Date("2025-03-09") },
-    { start: new Date("2025-04-17"), end: new Date("2025-04-21") },
+    { start: new Date("2025-04-17"), end: new Date("2025-04-20") },
 ];
 
 greyPeriods.forEach((period, index) => {
