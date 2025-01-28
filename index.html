@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statistiques BRESIL</title>
-    <!-- Lien vers la police Montserrat -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Lien vers la police Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
@@ -35,11 +35,20 @@
         <div id="adjusted-progress" style="margin-top: 10px; font-size: 1em; font-weight: bold; color: #333;">
             <!-- Affichage du pourcentage ajusté -->
         </div>
+        <hr>
+        <div>
+            <p style="margin-top: 10px; font-size: 1em; font-weight: bold; color: #333;">Sélectionnez une date à afficher :</p>
+            <form>
+                <label for="date">Sélectionnez une date :</label>
+                <input type="date" id="date" min="2024-08-29" max="2025-05-21">
+            </form>
+            <div id="result"></div>
+        </div>
     </div>
     <div class="container">
         <div>
-            <h2>Jours avant le 1er janvier 2025</h2>
-            <p id="days-to-new-year"></p>
+            <h2>% depuis le 4 novembre</h2>
+            <p id="percentage-4-nov"></p>
         </div>
         <hr>
         <div>
@@ -49,4 +58,5 @@
         </div>
     </div>
 </body>
+
 </html>
