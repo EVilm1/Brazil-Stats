@@ -1,6 +1,3 @@
-// Utilisation de la date manuelle pour aujourd'hui
-let manualToday = new Date("2024-12-22");
-
 // Format personnalisé pour afficher les dates
 function formatDate(date) {
     return date.toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric" });
@@ -21,10 +18,11 @@ function setToMidnight(date) {
 const startDate = new Date("2024-08-29");
 const endDate = new Date("2025-05-21");
 const middleDate = new Date((startDate.getTime() + endDate.getTime()) / 2); // Calcul de la date du milieu
+const fourthNov = new Date("2024-11-04");
 
 // Calcul des durées
 const today = new Date();
-//const today = new Date("2025-03-09");
+//const today = new Date("2024-09-30");
 const totalDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
 const daysPassed = Math.round((today - startDate) / (1000 * 60 * 60 * 24));
 const daysRemaining = totalDays - daysPassed;
@@ -104,10 +102,16 @@ document.getElementById("stats").innerHTML = `
     <p class="stat">Jour du milieu : <strong>${formatDay(middleDate)}</strong></p>
 `;
 
-// Affichage des jours avant le 1er janvier 2025
-document.getElementById("days-to-new-year").innerHTML = `
-    ${daysToNewYear > 0 ? `Il reste <strong>${daysToNewYear}</strong> jours avant le 1er janvier 2025.` 
-                        : `Le 1er janvier 2025 est déjà passé.`}
+// Calcul du pourcentage du temps écoulé entre le 4 novembre 2024 et la date de fin
+const elapsedTimePercentage4nov = ((today - fourthNov) / (endDate - fourthNov)) * 100;
+
+// Affichage du résultat dans l'élément HTML
+document.getElementById("percentage-4-nov").innerHTML = `
+    ${today >= startDate && today <= endDate 
+        ? `Il s'est écoulé <strong>${elapsedTimePercentage4nov.toFixed(2)}</strong>% du temps entre le 4 novembre 2024 et la fin.` 
+        : today < startDate 
+            ? `La période n'a pas encore commencé.` 
+            : `La période est terminée.`}
 `;
 
 // Affichage des jours avant le 2 février 2025
@@ -152,3 +156,56 @@ function addMondayMarkers() {
     }
 }
 addMondayMarkers();
+
+//--------------------------------------------------------------------------------------------
+
+// Ajoute un écouteur d'événement au champ de sélection de date
+document.getElementById("date").addEventListener("input", handleSelectedDate);
+
+// Fonction pour ajouter un marqueur à la barre de progression
+function addMarkerForDate(date, percentage) {
+    const existingMarker = document.querySelector(".marker");
+    if (existingMarker) {
+        existingMarker.remove(); // Supprime le marqueur existant
+    }
+
+    const markerPosition = ((date - startDate) / (endDate - startDate)) * 100;
+
+    // Vérifie que la date est bien dans l'intervalle
+    if (markerPosition < 0 || markerPosition > 100) {
+        alert("La date sélectionnée est hors de la période.");
+        return;
+    }
+
+    // Crée un marqueur visuel
+    const marker = document.createElement("div");
+    marker.classList.add("marker");
+    marker.style.left = `${markerPosition}%`;
+
+    // Ajoute un élément pour afficher le pourcentage à côté du marqueur
+    const percentageLabel = document.createElement("span");
+    percentageLabel.classList.add("percentage-label");
+    percentageLabel.textContent = `${percentage.toFixed(2)}%`;
+
+    // Place le pourcentage au-dessus du marqueur
+    marker.appendChild(percentageLabel);
+
+    // Ajoute le marqueur dans le conteneur de la barre de progression
+    progressBarContainer.appendChild(marker);
+}
+
+// Fonction pour gérer la date sélectionnée dynamiquement
+function handleSelectedDate(event) {
+    const selectedDate = new Date(event.target.value);
+
+    // Vérifie si la date est valide
+    if (!isNaN(selectedDate)) {
+        // Calcule le pourcentage de temps écoulé entre startDate et la date sélectionnée
+        const elapsedPercentage = ((selectedDate - startDate) / (endDate - startDate)) * 100;
+
+        // Ajoute un marqueur pour la date sélectionnée avec le pourcentage
+        addMarkerForDate(selectedDate, elapsedPercentage);
+    } else {
+        alert("Veuillez sélectionner une date valide.");
+    }
+}
