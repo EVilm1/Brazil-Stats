@@ -229,13 +229,13 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.forEach((el, index) => {
         setTimeout(() => {
             el.classList.add("visible");
-        }, index * 300);
+        }, index * 600);
     });
 
     // Démarre la barre de progression après l'apparition des 3 blocs
     setTimeout(() => {
         //progressBar.style.width = "100%"; // Fait apparaître la barre en l'animant
-    }, elements.length * 900 + 500); // Ajoute un délai après le dernier élément
+    }, elements.length * 1200 + 500); // Ajoute un délai après le dernier élément
 });
 
 // Fonction d'animation de la progression
