@@ -19,7 +19,7 @@ body {
 }
 
 .containerLarge {
-    max-width: 900px;
+    max-width: 1200px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -123,4 +123,27 @@ p {
     border-radius: 3px;
     white-space: nowrap;
     z-index: 10;
+}
+
+
+/* ANIM */
+.hidden {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.progress-bar-container {
+    position: relative;
+    overflow: hidden;
+}
+
+#progress-bar {
+    transition: width 5s cubic-bezier(0.25, 1, 0.5, 1);
 }
