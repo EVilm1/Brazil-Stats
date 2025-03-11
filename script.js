@@ -19,6 +19,7 @@ const startDate = new Date("2024-08-29");
 const endDate = new Date("2025-05-21");
 const middleDate = new Date((startDate.getTime() + endDate.getTime()) / 2); // Calcul de la date du milieu
 const fourthNov = new Date("2024-11-04");
+const firstJan = new Date("2025-01-01");
 
 // Calcul des durées
 const today = new Date();
@@ -40,7 +41,9 @@ const progressPercentage = Math.min((daysPassed / totalDays) * 100, 100);
 
 // Mise à jour de la barre de progression
 const progressBar = document.getElementById("progress-bar");
-progressBar.style.width = `${progressPercentage}%`;
+//progressBar.style.width = `${progressPercentage}%`;
+progressBar.style.width = "0%"; // La barre commence à 0 et sera animée
+
 
 // Ajouter un élément <span> pour afficher le pourcentage
 const percentageText = document.createElement("span");
@@ -90,7 +93,7 @@ const adjustedProgressPercentage = (elapsedNonGreyTime / totalNonGreyTime) * 100
 
 // Afficher le pourcentage ajusté
 const adjustedProgressElement = document.getElementById("adjusted-progress");
-adjustedProgressElement.textContent = `Progression hors vacances : ${adjustedProgressPercentage.toFixed(2)}%`;
+adjustedProgressElement.textContent = `Progression des cours uniquement : ${adjustedProgressPercentage.toFixed(2)}%`;
 
 // Affichage des statistiques principales
 document.getElementById("date-range").textContent = 
@@ -106,6 +109,8 @@ document.getElementById("stats").innerHTML = `
 
 // Calcul du pourcentage du temps écoulé entre le 4 novembre 2024 et la date de fin
 const elapsedTimePercentage4nov = ((today - fourthNov) / (endDate - fourthNov)) * 100;
+// Calcul du pourcentage du temps écoulé entre le 1 janvier 2025 et la date de fin
+const elapsedTimePercentage1jan = ((today - firstJan) / (endDate - firstJan)) * 100;
 
 // Affichage du résultat dans l'élément HTML
 document.getElementById("percentage-4-nov").innerHTML = `
@@ -116,10 +121,13 @@ document.getElementById("percentage-4-nov").innerHTML = `
             : `La période est terminée.`}
 `;
 
-// Affichage des jours avant le 2 février 2025
-document.getElementById("days-to-jan22").innerHTML = `
-    ${daysToFev2 > 0 ? `Il reste <strong>${daysToFev2}</strong> jours avant le 2 février 2025.` 
-                      : `Le 2 février 2025 est déjà passé.`}
+// Affichage du résultat dans l'élément HTML
+document.getElementById("percentage-1-jan").innerHTML = `
+    ${today >= startDate && today <= endDate 
+        ? `Il s'est écoulé <strong>${elapsedTimePercentage1jan.toFixed(2)}</strong>% du temps entre le 1 janvier 2025 et la fin.` 
+        : today < startDate 
+            ? `La période n'a pas encore commencé.` 
+            : `La période est terminée.`}
 `;
 
 // Gestion si la date actuelle est hors de la plage
@@ -211,3 +219,44 @@ function handleSelectedDate(event) {
         alert("Veuillez sélectionner une date valide.");
     }
 }
+
+//---------------------------------------ANIM--------------------------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(".container, .containerLarge");
+    const progressBar = document.getElementById("progress-bar");
+
+    elements.forEach((el, index) => {
+        setTimeout(() => {
+            el.classList.add("visible");
+        }, index * 300);
+    });
+
+    // Démarre la barre de progression après l'apparition des 3 blocs
+    setTimeout(() => {
+        //progressBar.style.width = "100%"; // Fait apparaître la barre en l'animant
+    }, elements.length * 900 + 500); // Ajoute un délai après le dernier élément
+});
+
+// Fonction d'animation de la progression
+function animateProgressBar(targetPercentage) {
+    let currentPercentage = 0;
+    const increment = targetPercentage / 100; // Vitesse d'animation
+
+    function step() {
+        if (currentPercentage < targetPercentage) {
+            currentPercentage += increment;
+            progressBar.style.width = `${currentPercentage}%`;
+            percentageText.textContent = `${currentPercentage.toFixed(2)}%`;
+            requestAnimationFrame(step);
+        } else {
+            progressBar.style.width = `${targetPercentage}%`;
+            percentageText.textContent = `${targetPercentage.toFixed(2)}%`;
+        }
+    }
+
+    requestAnimationFrame(step);
+}
+
+// Lancer l'animation avec la valeur calculée
+animateProgressBar(progressPercentage);
