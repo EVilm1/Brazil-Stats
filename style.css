@@ -47,10 +47,10 @@ p {
 
 /* Barre de progression */
 .progress-bar-container {
-    width: 90%;
-    height: 30px;
+    width: 95%;
+    height: 40px;
     background-color: #ddd;
-    border-radius: 15px;
+    border-radius: 30px;
     margin: 20px auto;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -93,9 +93,28 @@ p {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 1px;
+    width: 0.09em;
     background-color: rgba(56, 56, 56, 0.551);
     z-index: 0; /* Assure-toi que les traits noirs soient visibles par-dessus la barre */
+}
+
+/* .first-monday {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: black;
+    z-index: 0; /* Assure-toi que les traits noirs soient visibles par-dessus la barre */
+/*} */
+
+.first-day {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0.1em;
+    background-color: black;
+    z-index: 0; /* Assure-toi que les traits noirs soient visibles par-dessus la barre */
+    transform: translateX(-150%); /* Centre le marqueur */
 }
 
 #course-progress {
@@ -110,9 +129,11 @@ p {
     position: absolute;
     top: 0;
     height: 100%;
-    width: 2px;
+    width: 0.2em;
     background-color: red;
+    /* background-color: red; */
     z-index: 5;
+    transform: translateX(-100%); /* Centre le marqueur */
 }
 
 .marker .percentage-label {
