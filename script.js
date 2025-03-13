@@ -148,24 +148,63 @@ let firstMonday = new Date("2024-09-01");
 // Fonction pour calculer les positions des lundis
 function addMondayMarkers() {
     let currentDate = new Date(firstMonday); // Clone de la date de début
+    let lastMonth = currentDate.getMonth(); // Stocke le mois du premier lundi traité
+    let isFirstMonday = true; // Indicateur du premier lundi du mois
 
     // Boucle pour ajouter un trait noir pour chaque lundi jusqu'à endDate
     while (currentDate <= endDate) {
         const mondayPosition = ((currentDate - startDate) / (endDate - startDate)) * 100;
 
+        if (currentDate.getMonth() !== lastMonth) {
+            isFirstMonday = true; // Nouveau mois, donc réinitialisation
+        } else {
+            isFirstMonday = false;
+        }
+
         // Créer une nouvelle div pour représenter un trait noir
         const blackLine = document.createElement("div");
-        blackLine.classList.add("black-line");
+
+        if (isFirstMonday) {
+            blackLine.classList.add("black-line", "first-monday");
+        } else {
+            blackLine.classList.add("black-line");
+        }
+        
+        
         blackLine.style.left = `${mondayPosition}%`;
 
         // Ajouter la div dans le conteneur de la barre de progression
         progressBarContainer.appendChild(blackLine);
 
+        lastMonth = currentDate.getMonth(); // Met à jour le dernier mois traité
+
         // Passer au lundi suivant
         currentDate.setDate(currentDate.getDate() + 7);
     }
 }
+
+// Fonction pour ajouter les marqueurs des premiers jours du mois
+function addFirstDayMarkers() {
+    let currentDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1); // Premier jour du mois de départ
+
+    while (currentDate <= endDate) {
+        const firstDayPosition = ((currentDate - startDate) / (endDate - startDate)) * 100;
+
+        // Créer une div pour chaque premier jour du mois
+        const firstDayMarker = document.createElement("div");
+        firstDayMarker.classList.add("black-line", "first-day");
+        firstDayMarker.style.left = `${firstDayPosition}%`;
+
+        progressBarContainer.appendChild(firstDayMarker);
+
+        // Passer au premier jour du mois suivant
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        currentDate.setDate(1);
+    }
+}
+
 addMondayMarkers();
+addFirstDayMarkers();
 
 //--------------------------------------------------------------------------------------------
 
@@ -229,13 +268,13 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.forEach((el, index) => {
         setTimeout(() => {
             el.classList.add("visible");
-        }, index * 600);
+        }, index * 300);
     });
 
     // Démarre la barre de progression après l'apparition des 3 blocs
     setTimeout(() => {
         //progressBar.style.width = "100%"; // Fait apparaître la barre en l'animant
-    }, elements.length * 1200 + 500); // Ajoute un délai après le dernier élément
+    }, elements.length * 900 + 500); // Ajoute un délai après le dernier élément
 });
 
 // Fonction d'animation de la progression
